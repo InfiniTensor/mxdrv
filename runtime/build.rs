@@ -12,7 +12,10 @@ fn main() {
     };
     mx.define();
     println!("{}", mx_home.join("lib").display());
-    println!("cargo:rustc-link-search=native={}", mx_home.join("lib").display());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        mx_home.join("lib").display()
+    );
     println!("cargo:rustc-link-lib=dylib=mcruntime");
     println!("cargo:rustc-link-lib=dylib=mxc-runtime64");
 
@@ -23,12 +26,15 @@ fn main() {
         .clang_arg(format!("-I{}", mx_home.join("include").display()))
         .allowlist_item("mc.*")
         .must_use_type("mcError_t")
-        .default_enum_style(bindgen::EnumVariation::Rust { non_exhaustive: true })
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: true,
+        })
         .use_core()
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .generate()
         .expect("Unable to generate bindings");
     let out_path = PathBuf::from(env::var_os("OUT_DIR").unwrap());
-    bindings.write_to_file(out_path.join("bindings.rs"))
+    bindings
+        .write_to_file(out_path.join("bindings.rs"))
         .expect("Couldn't write bindings!");
 }

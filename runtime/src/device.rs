@@ -1,7 +1,7 @@
 use crate::{
     bindings::{
-        mcDevice_t,
         mcDeviceAttribute_t::{self, *},
+        mcDevice_t,
     },
     Dim3, MemSize, Version,
 };
@@ -102,8 +102,7 @@ impl Device {
     pub fn sm_limit(&self) -> SMLimit {
         SMLimit {
             max_blocks: self.get_attribute(mcDevAttrMaxBlocksPerMultiprocessor) as _,
-            max_threads: self.get_attribute(mcDeviceAttributeMaxThreadsPerMultiProcessor)
-                as _,
+            max_threads: self.get_attribute(mcDeviceAttributeMaxThreadsPerMultiProcessor) as _,
             max_smem: self
                 .get_attribute(mcDeviceAttributeMaxSharedMemoryPerMultiprocessor)
                 .into(),

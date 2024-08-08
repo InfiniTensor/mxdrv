@@ -1,4 +1,4 @@
-﻿use crate::{
+use crate::{
     bindings::{mcCtx_t, mcDevice_t, MCcontext},
     Device,
 };

@@ -1,7 +1,14 @@
 #![cfg(detected_mx)]
 
 #[macro_use]
-#[allow(unused, non_upper_case_globals, non_camel_case_types, non_snake_case)]
+#[allow(
+    unused,
+    non_upper_case_globals,
+    non_camel_case_types,
+    non_snake_case,
+    clippy::useless_transmute,
+    clippy::too_many_arguments
+)]
 pub mod bindings {
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
@@ -160,7 +167,7 @@ impl From<usize> for MemSize {
 #[allow(unused_variables, non_snake_case)]
 #[inline(always)]
 pub fn init() -> Result<(), NoDevice> {
-    use bindings::{mcInit, mcError_t::*};
+    use bindings::{mcError_t::*, mcInit};
     match unsafe { mcInit(0) } {
         mcSuccess => Ok(()),
         mcErrorInvalidDevice => Err(NoDevice),
@@ -178,5 +185,4 @@ pub fn get_device_count() -> i32 {
 fn test_binding() {
     let _ = init();
     println!("{}", get_device_count());
-
 }
