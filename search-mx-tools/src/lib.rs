@@ -8,8 +8,3 @@ use std::{env::var_os, path::PathBuf};
 pub fn find_mx_home() -> Option<PathBuf> {
     var_os("MACA_PATH").map(PathBuf::from)
 }
-
-#[test]
-fn test_path() {
-    println!("{}", find_mx_home().unwrap().display());
-}
